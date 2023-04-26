@@ -4,6 +4,7 @@ import 'package:qr_reader/models/scan_model.dart';
 import 'package:qr_reader/pages/direcciones_page.dart';
 import 'package:qr_reader/pages/mapas_page.dart';
 import 'package:qr_reader/providers/db_provider.dart' as db_provider;
+import 'package:qr_reader/providers/scan_list_provider.dart';
 import 'package:qr_reader/providers/ui_provider.dart';
 import 'package:qr_reader/widgets/custom_navigatorbar.dart';
 import 'package:qr_reader/widgets/scan_button.dart';
@@ -32,16 +33,14 @@ class _HomePageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiProvider = Provider.of<UiProvider>(context);
 
-    final tempScan = ScanModel(valor: 'http://google.com');
-    // db_provider.DBProvider.db.nuevoScan(tempScan);
-    // db_provider.DBProvider.db.getScanById(1).then((scan) => print(scan!.valor));
-    // db_provider.DBProvider.db.getTodosLosScans().then((scan) => print(scan));
-    // db_provider.DBProvider.db.deleteAllScans().then(print);
+    final scanListProvider = Provider.of<ScanListProvider>(context, listen: false);
 
     switch (uiProvider.selectedMenuOpt) {
       case 0:
+        scanListProvider.cargarScanPorTipo('geo');
         return const MapasPage();
       case 1:
+        scanListProvider.cargarScanPorTipo('http');
         return const DireccionesPage();
       default:
         return const MapasPage();
