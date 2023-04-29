@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:qr_reader/models/scan_model.dart';
 import 'package:qr_reader/pages/direcciones_page.dart';
 import 'package:qr_reader/pages/mapas_page.dart';
-import 'package:qr_reader/providers/db_provider.dart' as db_provider;
 import 'package:qr_reader/providers/scan_list_provider.dart';
 import 'package:qr_reader/providers/ui_provider.dart';
 import 'package:qr_reader/widgets/custom_navigatorbar.dart';
 import 'package:qr_reader/widgets/scan_button.dart';
+
+import 'package:qr_reader/providers/db_provider.dart' as db_provider;
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,7 +20,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: const Text('Historial'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.delete_forever))],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_forever),
+            onPressed: () => Provider.of<ScanListProvider>(context, listen: false).borrarTodos(),
+          ),
+        ],
       ),
       body: _HomePageBody(),
       bottomNavigationBar: const CustomNavigationBar(),
